@@ -7,7 +7,7 @@ library(grid)
 #Update the pathway accordingly
 AD<-read.csv('{path/folder containing your files}/Data of summary of reported findings.csv',h=T)
 
-#Row and column
+#N of row and column
 dim(AD)#251,157
 
 #--------Panel A
@@ -54,7 +54,7 @@ B<-ggplot(data=b_1,aes(x=variable,y=value,fill=Var1))+ geom_bar(stat= 'identity'
   theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(),legend.position = c(0.9, 0.9),legend.text = element_text(size =12),axis.line = element_line(colour = "black"),axis.title.x = element_text(size =12),axis.title.y = element_text(size = 12),axis.text.x = element_text(size =10),axis.text.y = element_text(size =10))
 
 #----------------------
-#Export the figure3
+#Combind figure A and B and export the combined figure ——> Main Figure3
 png('{path/folder containing your files}/combined_figure.png',width =5000,height =2000,res = 300)
 
 grid.newpage()
@@ -77,9 +77,7 @@ View(b)
 b[5,]<-c('all',colSums(b[1:3,2:153],na.rm=T))
 
 #Rank the biomarkers by studied times
-b<-b[,c(1,order(200-as.numeric(b[5,2:153]))+1)]
-
-dim(b)#153          
+b<-b[,c(1,order(200-as.numeric(b[5,2:153]))+1)]          
 
 #Add the name
 names(b)<-c('Var1','IL-6','TNF-α','CRP','IL-1β','IL-8','IL-10','IFN-γ','MCP-1','ACT','IL-1α','IL-2','IL-18','IL-4','IL-12','Lymphocyte','MIP-1α',"TGF-β1","IL-5",'IL-7',"CXCL-10","ICAM-1","IL-13",'CD8',"VEGF","IgG","IL-1ra" ,"IL-16","IL-17","CCL4","CD4","AβN-40", "AβN-42","CD40","Eotaxin","IL-3","IL-6R","GM-CSF","Neutrophil", "Monocyte","IL-12 p70", "TNF-β","IFN-α","MCP-3","T cell",
@@ -100,7 +98,7 @@ dim(b_1)#456 3
 #Set the colors
 colors<-c('#9DC3E7', 'gray', '#ECAD9E')
 
-#Export the figure
+#Export the figure ——> Supplementary figure1
 ggsave('{path/folder containing your files}/AD_result_figure_supple.png',width=50,height=20,units=c('cm'))
 
 ggplot(data=b_1,aes(x=variable,y=value,fill=Var1))+ geom_bar(stat= 'identity', position = 'stack',color='black',width=0.8)+scale_fill_manual(values=colors,name=NULL)+xlab('Examined biomarkers across studies')+ylab('Number of studies')+
